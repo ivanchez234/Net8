@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 class Fraction
 {
@@ -11,6 +11,34 @@ public:
 	{
 		numerator_ = numerator;
 		denominator_ = denominator;
+		normalize();
+	}
+	// алгоритм Евклида
+	int find(int a, int b) const {
+		a = std::abs(a); 
+		b = std::abs(b);
+		while (b != 0) {
+			int temp = b;
+			b = a % b;
+			a = temp;
+		}
+		return a;
+	}
+
+	// Метод для нормализации дроби (сокращение)
+	void normalize() {
+		if (denominator_ == 0) 
+		{
+			throw std::invalid_argument("invalid_argument");
+		}
+		if (denominator_ < 0) 
+		{ 
+			numerator_ = -numerator_;
+			denominator_ = -denominator_;
+		}
+		int gcd = find(numerator_, denominator_); 
+		numerator_ /= gcd; 
+		denominator_ /= gcd; 
 	}
 
 	bool operator==(const Fraction& num2) const {
